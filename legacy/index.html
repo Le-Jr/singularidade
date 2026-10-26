@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Singularidade</title>
+  <meta name="description" content="Bullet hell em pixel art: você é Ômega, um semideus cósmico contra exércitos, alienígenas e super-heróis.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;600;700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="wrap">
+  <div id="stage">
+    <canvas id="game" aria-label="Arena do jogo Singularidade"></canvas>
+    <div id="hud">
+      <div id="hpBox">
+        <div class="row lbl fs"><span>Essência</span><b id="hpTxt">1000</b></div>
+        <div class="bar"><i id="hpBar"></i></div>
+        <div class="row lbl fs"><span>Ascensão</span><b id="lvlTxt">Nv 1</b></div>
+        <div class="bar xp"><i id="xpBar" style="width:0"></i></div>
+      </div>
+      <div id="stats">
+        <div id="time">00:00</div>
+        <div class="lbl fs">Pontos <b id="scoreTxt">0</b></div>
+        <div class="lbl fs">Abates <b id="killTxt">0</b></div>
+      </div>
+      <div id="bossBox" hidden>
+        <div id="bossName" class="lbl fs">Chefe</div>
+        <div class="bar"><i id="bossBar"></i></div>
+      </div>
+      <div id="threat" class="lbl fs">Ameaça: <b id="threatTxt">Exército</b></div>
+      <div id="powers">
+        <div class="pw lbl fs"><span class="k" id="kBeam">Clique</span><span class="n">Raio</span></div>
+        <div class="pw lbl fs" id="pwErase"><div class="cd" id="cdErase"></div><span class="k" id="kErase">Espaço</span><span class="n">Apagar</span></div>
+        <div class="pw lbl fs" id="pwTp"><div class="cd" id="cdTp"></div><span class="k" id="kTp">Shift</span><span class="n">Teleporte</span></div>
+        <div class="pw lbl fs" id="pwTime" hidden><div class="cd" id="cdTime"></div><span class="k">Q</span><span class="n">Tempo</span></div>
+      </div>
+      <div id="mob" hidden>
+        <button class="mb" id="mTime" type="button" hidden>PARAR<br>TEMPO</button>
+        <button class="mb" id="mBeam" type="button">RAIO</button>
+        <button class="mb" id="mErase" type="button">APAGAR</button>
+        <button class="mb" id="mTp" type="button">TELE<br>PORTE</button>
+      </div>
+      <div id="banner"><div id="bTitle" class="lbl">—</div><div id="bSub" class="lbl fs"></div></div>
+    </div>
+
+    <div class="ov" id="menu">
+      <div class="card">
+        <div class="kick lbl">Zona de Teste 7 · 03:14 da manhã</div>
+        <h1>SINGULA<span>RIDADE</span></h1>
+        <p class="lead">Um reator falhou com você dentro. Você voltou como <b style="color:var(--gold)">ÔMEGA</b>, algo além do humano. Agora o exército, a força aérea, o serviço secreto, sociedades secretas, alienígenas e os maiores heróis do mundo querem te parar.</p>
+        <dl class="ctl" id="ctlDesk">
+          <dt>WASD / SETAS</dt><dd>Flutuar pela arena</dd>
+          <dt>MOUSE</dt><dd>Mirar as rajadas de energia (infinitas)</dd>
+          <dt>SEGURAR CLIQUE</dt><dd>Raio Cósmico: atravessa tudo e queima projéteis</dd>
+          <dt>ESPAÇO</dt><dd>Apagar da existência quem estiver perto</dd>
+          <dt>SHIFT / BOTÃO DIR.</dt><dd>Teleporte até a mira, com explosão na chegada</dd>
+          <dt>CONTATO</dt><dd>Sua aura desintegra quem encosta em você</dd>
+          <dt>Q</dt><dd>Parar o tempo (depois de desbloquear)</dd>
+          <dt>P · M</dt><dd>Pausar · Som</dd>
+          <dt>EVOLUÇÃO</dt><dd>A cada herói derrotado e a cada 5 níveis, escolha 1 de 3 poderes</dd>
+        </dl>
+        <dl class="ctl" id="ctlMob" hidden>
+          <dt>LADO ESQUERDO</dt><dd>Arraste para flutuar</dd>
+          <dt>MIRA</dt><dd>Automática no inimigo mais próximo</dd>
+          <dt>RAIO</dt><dd>Segure para o Raio Cósmico</dd>
+          <dt>APAGAR</dt><dd>Remove da existência quem estiver perto</dd>
+          <dt>TELEPORTE</dt><dd>Salta na direção do movimento</dd>
+          <dt>EVOLUÇÃO</dt><dd>A cada herói derrotado e a cada 5 níveis, escolha 1 de 3 poderes</dd>
+        </dl>
+        <button class="btn" id="startBtn" type="button">DESPERTAR</button>
+        <div class="best lbl" id="bestTxt"></div>
+      </div>
+    </div>
+
+    <div class="ov" id="pauseOv" hidden>
+      <div class="card" style="text-align:center;align-items:center">
+        <h1 style="font-size:max(22px,calc(var(--u)*20))">PAUSA</h1>
+        <button class="btn" id="resumeBtn" type="button" style="align-self:center">CONTINUAR</button>
+      </div>
+    </div>
+
+    <div class="ov" id="upOv" hidden>
+      <div class="card" style="max-width:calc(var(--u)*370)">
+        <div class="kick lbl" id="upKick">Herói derrotado</div>
+        <h1 style="font-size:max(22px,calc(var(--u)*20))">ESCOLHA UMA <span>EVOLUÇÃO</span></h1>
+        <div class="upl" id="upList"></div>
+      </div>
+    </div>
+
+    <div class="ov" id="overOv" hidden>
+      <div class="card">
+        <div class="kick lbl">Fim da singularidade</div>
+        <h1>ÔMEGA SE <span>DESFEZ</span></h1>
+        <p class="lead">Até deuses acabam. A humanidade comemora por enquanto.</p>
+        <div class="grid2">
+          <div class="st lbl"><span>Tempo</span><b id="oTime">0</b></div>
+          <div class="st lbl"><span>Abates</span><b id="oKills">0</b></div>
+          <div class="st lbl"><span>Apagados</span><b id="oErased">0</b></div>
+          <div class="st lbl"><span>Heróis</span><b id="oHeroes">0</b></div>
+          <div class="st lbl"><span>Ascensão</span><b id="oLvl">1</b></div>
+          <div class="st lbl"><span>Pontos</span><b id="oScore">0</b></div>
+        </div>
+        <button class="btn" id="againBtn" type="button">RENASCER</button>
+        <div class="best lbl" id="bestTxt2"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="js/game.js"></script>
+</body>
+</html>
