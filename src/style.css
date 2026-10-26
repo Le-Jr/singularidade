@@ -23,9 +23,33 @@ body{height:100%;margin:0;background:var(--void);color:var(--ink);font-family:va
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
   -webkit-user-select:none;user-select:none;touch-action:none}
 #wrap{height:100%;display:flex;align-items:center;justify-content:center;padding-block:10px}
-/* Phone held upright: the whole cabinet turns sideways (width/height set by fit() in main.ts) */
-#wrap.rot{position:fixed;top:0;left:100%;transform-origin:0 0;transform:rotate(90deg)}
-#stage{position:relative;--u:1px;background:#000;box-shadow:0 0 0 2px #241c33,0 0 60px rgba(255,210,94,.08);overflow:hidden;max-width:100%}
+#stage{position:relative;--u0:1px;--u:var(--u0);background:#000;box-shadow:0 0 0 2px #241c33,0 0 60px rgba(255,210,94,.08);overflow:hidden;max-width:100%}
+/* Touch: --u0 is ~half the desktop value on a phone, so the whole DOM HUD and overlays scale up */
+#stage.touch{--u:calc(var(--u0) * 1.5)}
+/* Overlays keep desktop proportions (they already fill the screen); the touch buttons hide behind them */
+#stage.touch .ov{--u:var(--u0)}
+#stage.touch #upOv{--u:calc(var(--u0) * 1.25)}
+#stage:has(.ov:not([hidden])) #mob{display:none}
+/* Landscape phone: the 3 evolution cards side by side, so the screen fits the short height */
+#stage.touch .upPanel{width:min(100%,calc(var(--u)*330))}
+#stage.touch .upl{flex-direction:row}
+#stage.touch .upc{flex:1 1 0;grid-template-columns:auto 1fr;grid-template-rows:auto auto;align-content:start}
+#stage.touch .upTop{flex-direction:column;align-items:flex-start;gap:2px}
+/* Phone in landscape: fullscreen cabinet, no margins (safe areas still respected) */
+@media (pointer:coarse) and (orientation:landscape){
+  body{padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
+  #wrap{padding-block:0}
+  #stage{box-shadow:none}
+}
+/* Phone held upright: the game is landscape only */
+#rotate{display:none;position:fixed;inset:0;z-index:10;background:var(--void);flex-direction:column;align-items:center;justify-content:center;gap:20px;text-align:center;padding:24px}
+@media (pointer:coarse) and (orientation:portrait){#rotate{display:flex}#wrap{visibility:hidden}}
+#rotate .phone{position:relative;width:44px;height:76px;border:4px solid var(--gold);border-radius:6px;box-shadow:0 0 24px rgba(255,210,94,.3);animation:turn 2.4s ease-in-out infinite}
+#rotate .phone::after{content:'';position:absolute;left:50%;bottom:4px;width:8px;height:4px;margin-left:-4px;background:var(--gold)}
+@keyframes turn{0%,20%{transform:rotate(0)}50%,80%{transform:rotate(-90deg)}100%{transform:rotate(0)}}
+#rotate h2{margin:0;font-family:var(--f-display);font-weight:700;font-size:28px;color:var(--ink);letter-spacing:.02em;text-shadow:0 3px 0 #3a2410,0 0 24px rgba(255,210,94,.35)}
+#rotate h2 span{color:var(--gold)}
+#rotate p{margin:0;font-size:11px;color:var(--dim);line-height:1.5}
 canvas{display:block;image-rendering:pixelated;image-rendering:crisp-edges;cursor:crosshair}
 .lbl{font-family:var(--f-label);letter-spacing:.08em;text-transform:uppercase}
 .fs{font-size:max(9px,calc(var(--u)*6))}
@@ -84,7 +108,7 @@ canvas{display:block;image-rendering:pixelated;image-rendering:crisp-edges;curso
 #banner.on{opacity:1}
 #bTitle{font-weight:700;font-size:max(18px,calc(var(--u)*16));color:var(--ember);text-shadow:0 2px 0 #000,0 0 18px rgba(255,90,60,.5)}
 #bSub{color:var(--ink);margin-top:4px;text-shadow:0 1px 0 #000}
-.ov{position:absolute;inset:0;background:rgba(8,6,14,.82);display:flex;align-items:center;justify-content:center;overflow:auto;padding:12px}
+.ov{position:absolute;inset:0;background:rgba(8,6,14,.82);display:flex;align-items:safe center;justify-content:safe center;overflow:auto;padding:12px}
 .card{max-width:calc(var(--u)*300);width:100%;display:flex;flex-direction:column;gap:max(8px,calc(var(--u)*6));text-align:left}
 .kick{color:var(--gold);font-size:max(9px,calc(var(--u)*5.5))}
 h1{margin:0;font-family:var(--f-display);font-weight:700;font-size:max(28px,calc(var(--u)*30));line-height:.95;color:var(--ink);letter-spacing:.02em;text-wrap:balance;text-shadow:0 3px 0 #3a2410,0 0 30px rgba(255,210,94,.35)}
@@ -103,14 +127,14 @@ h1 span{color:var(--gold)}
 .st{display:flex;justify-content:space-between;gap:8px;border-bottom:1px solid #2a2140;padding-bottom:2px;font-size:max(11px,calc(var(--u)*6.5))}
 .st span{color:var(--dim)}
 .st b{color:var(--ink);font-variant-numeric:tabular-nums}
-#mob{position:absolute;right:calc(var(--u)*6);bottom:calc(var(--u)*6);display:grid;grid-template-columns:62px 62px;grid-template-areas:"time tp" "erase beam";gap:8px}
+#mob{position:absolute;right:calc(var(--u)*5);bottom:calc(var(--u)*5);display:grid;grid-template-columns:72px 72px;grid-template-areas:"time tp" "erase beam";gap:8px}
 #mTime{grid-area:time}#mTp{grid-area:tp}#mErase{grid-area:erase}#mBeam{grid-area:beam}
 /* Touch buttons: same icons and conic cooldown as the desktop skill bar, round for thumbs */
-.mb{pointer-events:auto;position:relative;width:62px;height:62px;border-radius:50%;border:2px solid var(--gold);padding:0;
+.mb{pointer-events:auto;position:relative;isolation:isolate;width:72px;height:72px;border-radius:50%;border:2px solid var(--gold);padding:0;
   background:rgba(16,12,26,.72);box-shadow:inset 0 0 0 2px #000,0 0 10px rgba(255,210,94,.25);
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;touch-action:none}
-.mb .ico{width:26px;height:auto;position:relative;z-index:1}
-.mb .n{font-family:var(--f-label);font-size:8px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink);text-shadow:0 1px 0 #000;position:relative;z-index:1;line-height:1}
+.mb .ico{width:32px;height:auto;position:relative;z-index:1}
+.mb .n{font-family:var(--f-label);font-size:9px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink);text-shadow:0 1px 0 #000;position:relative;z-index:1;line-height:1}
 .mb::after{content:'';position:absolute;inset:0;border-radius:50%;background:conic-gradient(rgba(6,4,12,.78) calc(var(--cd,0) * 1turn),transparent 0);z-index:2;pointer-events:none}
 .mb.wait{border-color:var(--dim);box-shadow:inset 0 0 0 2px #000}
 .mb.wait .n{color:var(--dim)}
@@ -138,4 +162,4 @@ h1 span{color:var(--gold)}
 .upInv{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:max(4px,calc(var(--u)*2));color:var(--dim);border-top:1px solid #2a2140;padding-top:max(5px,calc(var(--u)*3))}
 .upInv .invRow+.invRow{margin-left:max(4px,calc(var(--u)*3))}
 .upInv .slot{width:max(16px,calc(var(--u)*9));height:max(16px,calc(var(--u)*9))}
-@media (prefers-reduced-motion:reduce){#banner,#xpTop i{transition:none}.bar.hp.low{animation:none}}
+@media (prefers-reduced-motion:reduce){#rotate .phone{animation:none;transform:rotate(-90deg)}#banner,#xpTop i{transition:none}.bar.hp.low{animation:none}}

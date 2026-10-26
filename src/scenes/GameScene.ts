@@ -7,7 +7,7 @@ import { WorldView } from '../render/WorldView.ts';
 import { Sim, STEP } from '../sim/Sim.ts';
 import type { SimEvent } from '../sim/types.ts';
 import { Hud } from '../ui/Hud.ts';
-import { lockLandscape } from '../ui/orientation.ts';
+import { lockLandscape, portraitTouch } from '../ui/orientation.ts';
 import { loadBest, saveBest } from '../ui/storage.ts';
 
 /** Max fixed steps per rendered frame, so a long hitch doesn't spiral. */
@@ -39,10 +39,12 @@ export class GameScene extends Phaser.Scene {
         this.hud.showBanner(this.synth.toggleMute() ? 'Som desligado' : 'Som ligado', '', 0.9);
       },
       onChoose: i => this.choose(i),
-      onBlur: () => { if (this.running && !this.sim.s.over && !this.paused && !this.sim.s.choosing) this.togglePause(); },
+      onBlur: () => this.autoPause(),
       onTouchMode: () => this.hud.setTouch(),
     });
     this.hud.setBest(this.best);
+    // Turning the phone upright hides the game behind the rotate screen, so stop the clock
+    portraitTouch.addEventListener('change', e => { if (e.matches) this.autoPause(); });
     // Starting from a tap is the user gesture that fullscreen and the landscape lock need
     for (const id of ['startBtn', 'againBtn']) document.getElementById(id)!.addEventListener('click', () => { lockLandscape(); this.start(); });
     document.getElementById('resumeBtn')!.addEventListener('click', () => this.togglePause());
@@ -64,6 +66,10 @@ export class GameScene extends Phaser.Scene {
     this.hud.hideBoss();
     this.hud.setThreat(this.sim.s.threat);
     this.hud.showBanner('Ômega desperta', 'Sobreviva o máximo que puder', 2.2);
+  }
+
+  private autoPause() {
+    if (this.running && !this.sim.s.over && !this.paused && !this.sim.s.choosing) this.togglePause();
   }
 
   private togglePause() {

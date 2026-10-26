@@ -56,35 +56,32 @@ await page.waitForTimeout(5000);
 await shot(page, '07-over');
 const stats = await game(page, '({ t: g.state.t, kills: g.state.kills, over: g.state.over, fps: Math.round(g.game.loop.actualFps) })');
 
-// Phone run (touch controls)
-const phone = await (await browser.newContext({ viewport: { width: 740, height: 360 }, hasTouch: true, isMobile: true })).newPage();
+// Phone run (touch controls), landscape
+const phone = await (await browser.newContext({ viewport: { width: 844, height: 390 }, hasTouch: true, isMobile: true })).newPage();
 watch(phone);
 await phone.goto(url);
 await phone.waitForTimeout(800);
+await shot(phone, '08-mobile-menu');
 await phone.tap('#startBtn');
 await phone.waitForTimeout(2000);
 await game(phone, 'g.state.up.time = 1, Object.assign(g.state.lv, { time: 1, aura: 2 })');
 await phone.tap('#mErase');
 await phone.waitForTimeout(600);
-await shot(phone, '08-mobile');
+await shot(phone, '09-mobile');
 await game(phone, "g.state.pendingUp = 1, g.state.upDelay = 0, g.state.upReason.push('Playtest')");
 await phone.waitForTimeout(500);
-await shot(phone, '09-mobile-upgrade');
-
-// Phone held upright: the game is rotated 90° with CSS and touch must still land on the right game coordinate
-const tall = await (await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true })).newPage();
-watch(tall);
-await tall.goto(url);
-await tall.waitForTimeout(800);
-await shot(tall, '10-portrait-menu');
-await tall.tap('#startBtn');
-await tall.waitForTimeout(1500);
-const r = await tall.evaluate(() => document.querySelector('canvas')!.getBoundingClientRect().toJSON()) as DOMRect;
-const k = r.height / 400; // rotated: the canvas's 400-unit width runs down the screen
-await tall.touchscreen.tap(r.right - 50 * k, r.top + 100 * k);
-const ptr = await game(tall, '({ x: Math.round(g.input.activePointer.x), y: Math.round(g.input.activePointer.y) })') as { x: number; y: number };
-if (Math.abs(ptr.x - 100) > 2 || Math.abs(ptr.y - 50) > 2) errors.push(`portrait touch mapped to ${ptr.x},${ptr.y}, expected 100,50`);
-await shot(tall, '11-portrait-play');
+await shot(phone, '10-mobile-upgrade');
+await phone.tap('.upc');
+// Turning the phone upright shows the rotate screen and pauses the run
+await phone.setViewportSize({ width: 390, height: 844 });
+await phone.waitForTimeout(400);
+await shot(phone, '11-mobile-portrait');
+if (!(await game(phone, 'g.paused'))) errors.push('run did not pause when the phone turned upright');
+await phone.setViewportSize({ width: 844, height: 390 });
+await phone.waitForTimeout(400);
+const fitW = await phone.evaluate(() => [document.querySelector('canvas')!.clientWidth, document.getElementById('stage')!.clientWidth]);
+if (Math.abs(fitW[0] - fitW[1]) > 2) errors.push(`canvas ${fitW[0]}px wide in a ${fitW[1]}px stage after rotating back`);
+await shot(phone, '12-mobile-back');
 
 await browser.close();
 console.log('stats', JSON.stringify(stats));

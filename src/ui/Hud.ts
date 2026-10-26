@@ -70,6 +70,7 @@ export class Hud {
 
   setTouch() {
     this.touch = true;
+    $('stage').classList.add('touch');
     $('mob').hidden = false;
     $('powers').style.display = 'none';
     $('ctlDesk').hidden = true;
