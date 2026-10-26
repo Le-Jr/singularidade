@@ -35,6 +35,8 @@ O modo toque liga automaticamente em telas sem ponteiro fino, ou no primeiro toq
 | Botão **PARAR TEMPO** | Aparece depois de desbloquear o poder |
 | Tocar numa carta | Escolher evolução |
 
+O jogo é só horizontal (16:9). No celular, ao tocar em DESPERTAR ele tenta entrar em tela cheia e travar a tela na horizontal (funciona no Android). Onde isso não é possível (iPhone, por exemplo), se o aparelho estiver em pé o jogo inteiro é desenhado girado 90°: basta virar o celular para jogar. O toque continua certo nos dois casos.
+
 No celular, a barra de poderes do HUD é trocada por botões redondos em grade 2 × 2 no canto inferior direito (Tempo e Teleporte em cima, Apagar e Raio embaixo), com o mesmo ícone de cada poder. Enquanto o poder recarrega, um setor escuro gira sobre o botão, como na barra do desktop.
 
 ## Som

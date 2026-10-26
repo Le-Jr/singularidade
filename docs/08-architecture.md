@@ -133,7 +133,9 @@ Phaser's sound manager is disabled (`audio.noAudio`). `Synth` owns one AudioCont
 
 ## HUD (`src/ui/Hud.ts`)
 
-DOM over the canvas, scaled through the CSS variable `--u` (CSS pixels per game unit). Layout follows Vampire Survivors / 20 Minutes Till Dawn: XP strip on top, life bar and inventory (rebuilt only when `s.lv` changes) top-left, clock top-center, skill bar bottom-center with a conic cooldown driven by the `--cd` CSS variable. Icons are 8×8 `ICON_ART` in `src/render/art.ts`, rasterized to data URLs by `src/ui/icons.ts`. The small life bar under Ômega is drawn in the canvas by `WorldView.drawHero`. Banners are timed by `Hud.tick`, which only runs while the game runs, so they freeze on pause. Best score: `localStorage['singularidade_best']` in `src/ui/storage.ts`.
+DOM over the canvas, scaled through the CSS variable `--u` (CSS pixels per game unit). Layout follows Vampire Survivors / 20 Minutes Till Dawn: XP strip on top, life bar and inventory (rebuilt only when `s.lv` changes) top-left, clock top-center, skill bar bottom-center with a conic cooldown driven by the `--cd` CSS variable. Icons are 8×8 `ICON_ART` in `src/render/art.ts`, rasterized to data URLs by `src/ui/icons.ts`. The small life bar under Ômega is drawn in the canvas by `WorldView.drawHero`.
+
+**Orientation** (`src/ui/orientation.ts`): the game is landscape only. Starting a run on a touch device requests fullscreen + `screen.orientation.lock('landscape')` (Android). Otherwise, on a touch device in portrait, `fit()` in `main.ts` adds `.rot` to `#wrap` (rotate 90° clockwise, sized to the swapped viewport). `patchForRotation()` makes Phaser cope: `scale.getParentBounds` uses the stage's layout size instead of `getBoundingClientRect`, and `input.transformPointer` maps page coordinates through the rotation, since Phaser's `canvasBounds`/`displayScale` come from the rotated box. The portrait playtest step asserts a tap lands on the expected game coordinate. Banners are timed by `Hud.tick`, which only runs while the game runs, so they freeze on pause. Best score: `localStorage['singularidade_best']` in `src/ui/storage.ts`.
 
 ## Tooling
 
