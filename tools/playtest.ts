@@ -71,6 +71,21 @@ await game(phone, "g.state.pendingUp = 1, g.state.upDelay = 0, g.state.upReason.
 await phone.waitForTimeout(500);
 await shot(phone, '09-mobile-upgrade');
 
+// Phone held upright: the game is rotated 90° with CSS and touch must still land on the right game coordinate
+const tall = await (await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true })).newPage();
+watch(tall);
+await tall.goto(url);
+await tall.waitForTimeout(800);
+await shot(tall, '10-portrait-menu');
+await tall.tap('#startBtn');
+await tall.waitForTimeout(1500);
+const r = await tall.evaluate(() => document.querySelector('canvas')!.getBoundingClientRect().toJSON()) as DOMRect;
+const k = r.height / 400; // rotated: the canvas's 400-unit width runs down the screen
+await tall.touchscreen.tap(r.right - 50 * k, r.top + 100 * k);
+const ptr = await game(tall, '({ x: Math.round(g.input.activePointer.x), y: Math.round(g.input.activePointer.y) })') as { x: number; y: number };
+if (Math.abs(ptr.x - 100) > 2 || Math.abs(ptr.y - 50) > 2) errors.push(`portrait touch mapped to ${ptr.x},${ptr.y}, expected 100,50`);
+await shot(tall, '11-portrait-play');
+
 await browser.close();
 console.log('stats', JSON.stringify(stats));
 console.log(`screenshots in ${out}/`);

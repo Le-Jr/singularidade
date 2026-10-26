@@ -7,6 +7,7 @@ import { WorldView } from '../render/WorldView.ts';
 import { Sim, STEP } from '../sim/Sim.ts';
 import type { SimEvent } from '../sim/types.ts';
 import { Hud } from '../ui/Hud.ts';
+import { lockLandscape } from '../ui/orientation.ts';
 import { loadBest, saveBest } from '../ui/storage.ts';
 
 /** Max fixed steps per rendered frame, so a long hitch doesn't spiral. */
@@ -42,8 +43,8 @@ export class GameScene extends Phaser.Scene {
       onTouchMode: () => this.hud.setTouch(),
     });
     this.hud.setBest(this.best);
-    document.getElementById('startBtn')!.addEventListener('click', () => this.start());
-    document.getElementById('againBtn')!.addEventListener('click', () => this.start());
+    // Starting from a tap is the user gesture that fullscreen and the landscape lock need
+    for (const id of ['startBtn', 'againBtn']) document.getElementById(id)!.addEventListener('click', () => { lockLandscape(); this.start(); });
     document.getElementById('resumeBtn')!.addEventListener('click', () => this.togglePause());
     // Debug handle for the console and automated playtests: window.__singularidade.sim.s
     (window as unknown as Record<string, unknown>).__singularidade = this;

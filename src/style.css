@@ -23,6 +23,8 @@ body{height:100%;margin:0;background:var(--void);color:var(--ink);font-family:va
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
   -webkit-user-select:none;user-select:none;touch-action:none}
 #wrap{height:100%;display:flex;align-items:center;justify-content:center;padding-block:10px}
+/* Phone held upright: the whole cabinet turns sideways (width/height set by fit() in main.ts) */
+#wrap.rot{position:fixed;top:0;left:100%;transform-origin:0 0;transform:rotate(90deg)}
 #stage{position:relative;--u:1px;background:#000;box-shadow:0 0 0 2px #241c33,0 0 60px rgba(255,210,94,.08);overflow:hidden;max-width:100%}
 canvas{display:block;image-rendering:pixelated;image-rendering:crisp-edges;cursor:crosshair}
 .lbl{font-family:var(--f-label);letter-spacing:.08em;text-transform:uppercase}
