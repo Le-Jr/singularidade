@@ -60,10 +60,16 @@ O banner "Nova ameaça" anuncia cada mudança. O nome atual aparece no canto inf
 
 ## HUD
 
+Inspirado em Vampire Survivors e 20 Minutes Till Dawn.
+
 | Posição | Elemento |
 |---|---|
-| Superior esquerdo | Barra de Essência, nível de Ascensão e barra de XP |
-| Superior direito | Cronômetro, pontos, abates |
-| Topo central | Nome e vida do chefe (durante a luta) |
-| Inferior esquerdo | Ameaça atual |
-| Inferior direito | Poderes com tecla e recarga |
+| Faixa no topo | Barra de XP de ponta a ponta, com o nível de Ascensão à direita |
+| Superior esquerdo | Coração e barra de Essência (vida); abaixo, o inventário: poderes na primeira fileira (Raio, Apagar, Teleporte, Tempo, Clones, Estrelas, Fase) e passivas na segunda (Rajada, Aura, Corpo, Regeneração), com o nível de evolução no canto de cada ícone e borda dourada no nível máximo |
+| Topo central | Cronômetro, ameaça atual e, durante a luta, nome e vida do chefe |
+| Superior direito | Abates (caveira) e pontos (estrela) |
+| Inferior central | Barra de poderes ativos com tecla e recarga circular (desktop) |
+| Inferior direito (celular) | Botões de toque com os mesmos ícones e recarga circular, em grade 2 × 2 |
+| Sob Ômega | Barrinha de vida que acompanha o personagem |
+
+A tela de evolução mostra as 3 cartas em lista, cada uma com ícone, nome, nível ("Novo!" para poderes inéditos), descrição e tecla, e embaixo o inventário atual.

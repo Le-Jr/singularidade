@@ -35,7 +35,7 @@ O modo toque liga automaticamente em telas sem ponteiro fino, ou no primeiro toq
 | Botão **PARAR TEMPO** | Aparece depois de desbloquear o poder |
 | Tocar numa carta | Escolher evolução |
 
-No celular, os indicadores de poder do HUD são trocados pelos botões. Um botão fica translúcido enquanto o poder recarrega.
+No celular, a barra de poderes do HUD é trocada por botões redondos em grade 2 × 2 no canto inferior direito (Tempo e Teleporte em cima, Apagar e Raio embaixo), com o mesmo ícone de cada poder. Enquanto o poder recarrega, um setor escuro gira sobre o botão, como na barra do desktop.
 
 ## Som
 

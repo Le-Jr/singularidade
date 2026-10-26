@@ -12,7 +12,7 @@ src/sim/              game logic, no Phaser/DOM (runs in Node)
 src/render/           art data, procedural textures, WorldView (draws GameState)
 src/input/Controls    keyboard, mouse, touch joystick, mobile buttons → SimInput
 src/audio/Synth       Web Audio synthesizer
-src/ui/               DOM HUD/overlays, best-score storage
+src/ui/               DOM HUD/overlays, HUD icons, best-score storage
 tests/                vitest (sim)
 tools/                balance.ts (headless bot runs), playtest.ts (headless Chromium screenshots)
 ```
@@ -133,7 +133,7 @@ Phaser's sound manager is disabled (`audio.noAudio`). `Synth` owns one AudioCont
 
 ## HUD (`src/ui/Hud.ts`)
 
-DOM over the canvas, scaled through the CSS variable `--u` (CSS pixels per game unit). Banners are timed by `Hud.tick`, which only runs while the game runs, so they freeze on pause. Best score: `localStorage['singularidade_best']` in `src/ui/storage.ts`.
+DOM over the canvas, scaled through the CSS variable `--u` (CSS pixels per game unit). Layout follows Vampire Survivors / 20 Minutes Till Dawn: XP strip on top, life bar and inventory (rebuilt only when `s.lv` changes) top-left, clock top-center, skill bar bottom-center with a conic cooldown driven by the `--cd` CSS variable. Icons are 8×8 `ICON_ART` in `src/render/art.ts`, rasterized to data URLs by `src/ui/icons.ts`. The small life bar under Ômega is drawn in the canvas by `WorldView.drawHero`. Banners are timed by `Hud.tick`, which only runs while the game runs, so they freeze on pause. Best score: `localStorage['singularidade_best']` in `src/ui/storage.ts`.
 
 ## Tooling
 

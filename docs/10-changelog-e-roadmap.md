@@ -2,6 +2,11 @@
 
 ## Changelog
 
+### Não lançado
+- HUD refeito no estilo de Vampire Survivors e 20 Minutes Till Dawn: barra de XP no topo, vida com coração, inventário de poderes e passivas com ícones e nível, cronômetro central, barra de poderes com recarga circular e barrinha de vida sob Ômega.
+- Tela de evolução em lista vertical com ícones e o inventário atual.
+- Botões de toque com os ícones dos poderes e recarga circular, em grade 2 × 2 para não cobrir o placar.
+
 ### v2.0: Migração para Phaser
 - Jogo reescrito em **Phaser 4 + Vite + TypeScript**, com o mesmo conteúdo e os mesmos números da v1.1.
 - Simulação separada da renderização (`src/sim/`, sem Phaser), com **timestep fixo de 60 Hz** e **RNG com semente**: a mesma semente e as mesmas entradas geram a mesma partida.

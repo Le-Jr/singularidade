@@ -39,6 +39,7 @@ src/
   input/Controls.ts     keyboard, mouse, touch joystick, mobile DOM buttons → SimInput
   audio/Synth.ts        Web Audio synthesizer, play(SfxKey), beam drone
   ui/Hud.ts             DOM HUD + overlays (markup in index.html, styles in src/style.css)
+  ui/icons.ts           rasterizes ICON_ART (render/art.ts) to data URLs for HUD <img>s
 tests/                  vitest, sim only
 tools/balance.ts        headless bot runs → survival stats (npm run sim)
 tools/playtest.ts       headless Chromium → screenshots in .playtest/ (npm run playtest)

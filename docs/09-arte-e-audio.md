@@ -42,6 +42,10 @@
 - **Silkscreen** (rótulos, HUD, botões): bitmap clássica, sempre em maiúsculas com espaçamento entre letras.
 - Fallback: `ui-monospace, Menlo, monospace`.
 
+## Ícones do HUD
+
+Ícones 8 × 8 em `ICON_ART` (`src/render/art.ts`), um por evolução (raio, apagar, teleporte, ampulheta, clones, estrela cadente, escudo, rajadas, aura, coração dourado, cruz verde) mais coração vermelho (vida), caveira (abates) e estrela (pontos). Viram imagens no DOM via `src/ui/icons.ts`, ampliadas sem suavização.
+
 ## Sprites
 
 | Sprite | Tamanho | Descrição |
