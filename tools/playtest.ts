@@ -1,7 +1,7 @@
 // Automated visual playtest: drives the real game in headless Chromium and saves screenshots to .playtest/.
 // Usage: npm run dev (other terminal), then npm run playtest [-- http://localhost:5173/]
 // Needs a local Chromium/Chrome; set CHROME_PATH if it is not at a standard location.
-import { existsSync, mkdirSync } from 'node:fs';
+import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { chromium, type Page } from 'playwright-core';
 
 const url = process.argv[2] ?? 'http://localhost:5173/';
@@ -82,6 +82,27 @@ await phone.waitForTimeout(400);
 const fitW = await phone.evaluate(() => [document.querySelector('canvas')!.clientWidth, document.getElementById('stage')!.clientWidth]);
 if (Math.abs(fitW[0] - fitW[1]) > 2) errors.push(`canvas ${fitW[0]}px wide in a ${fitW[1]}px stage after rotating back`);
 await shot(phone, '12-mobile-back');
+
+// Contact sheet of the actual runtime textures, enlarged with nearest-neighbor.
+const sprites = await page.evaluate(() => {
+  const scene = (window as any).__singularidade;
+  const keys = ['player', 'soldier', 'agent', 'mason', 'tank', 'jet', 'alien', 'missile', 'boss0', 'boss1', 'boss2', 'boss3'];
+  const labels = ['Ômega', 'Soldado', 'Agente', 'Maçom', 'Tanque', 'Caça', 'Alien', 'Míssil', 'Égide', 'Valquíria', 'Titã', 'Sentinela'];
+  const canvas = document.createElement('canvas');
+  canvas.width = 720; canvas.height = 420;
+  const ctx = canvas.getContext('2d')!;
+  ctx.imageSmoothingEnabled = false;
+  ctx.fillStyle = '#16121e'; ctx.fillRect(0, 0, 720, 420);
+  keys.forEach((key, i) => {
+    const img = scene.textures.get('spr:' + key).getSourceImage();
+    const x = (i % 4) * 180, y = Math.floor(i / 4) * 140;
+    ctx.drawImage(img, x + (180 - img.width * 5) / 2, y + 12, img.width * 5, img.height * 5);
+    ctx.fillStyle = '#f1e8d4'; ctx.font = '14px monospace'; ctx.textAlign = 'center';
+    ctx.fillText(labels[i], x + 90, y + 116);
+  });
+  return canvas.toDataURL('image/png').split(',')[1];
+});
+writeFileSync(`${out}/13-sprites.png`, Buffer.from(sprites, 'base64'));
 
 await browser.close();
 console.log('stats', JSON.stringify(stats));

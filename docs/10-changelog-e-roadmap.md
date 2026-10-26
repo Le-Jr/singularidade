@@ -3,6 +3,7 @@
 ## Changelog
 
 ### Não lançado
+- Sprites de Ômega e de todas as facções redesenhados com contornos, volumes e materiais mais legíveis; os quatro chefes ganham silhuetas próprias, mantendo tamanhos e colisões.
 - HUD refeito no estilo de Vampire Survivors e 20 Minutes Till Dawn: barra de XP no topo, vida com coração, inventário de poderes e passivas com ícones e nível, cronômetro central, barra de poderes com recarga circular e barrinha de vida sob Ômega.
 - Tela de evolução em lista vertical com ícones e o inventário atual.
 - Botões de toque com os ícones dos poderes e recarga circular, em grade 2 × 2 para não cobrir o placar.

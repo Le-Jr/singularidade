@@ -1,7 +1,7 @@
 // Builds every texture procedurally at boot (no image files): sprites, flash silhouettes, bullets, ground, glow, vignette.
 import Phaser from 'phaser';
 import { H, TAU, W } from '../sim/util.ts';
-import { BOSS_PALETTES, ENEMY_ART, HERO_ROWS, PLAYER, type PixelArt } from './art.ts';
+import { BOSS_PALETTES, ENEMY_ART, BOSS_ROWS, PLAYER, type PixelArt } from './art.ts';
 
 export const TEX = {
   player: 'spr:player',
@@ -120,7 +120,7 @@ function addVignette(scene: Phaser.Scene) {
 export function buildTextures(scene: Phaser.Scene) {
   addSprite(scene, TEX.player, PLAYER);
   for (const [type, art] of Object.entries(ENEMY_ART)) addSprite(scene, TEX.enemy(type), art);
-  BOSS_PALETTES.forEach((pal, id) => addSprite(scene, TEX.boss(id), { rows: HERO_ROWS, pal }));
+  BOSS_PALETTES.forEach((pal, id) => addSprite(scene, TEX.boss(id), { rows: BOSS_ROWS[id], pal }));
   addGround(scene);
   addGlow(scene);
   addVignette(scene);

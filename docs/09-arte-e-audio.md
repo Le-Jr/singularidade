@@ -50,14 +50,19 @@
 
 | Sprite | Tamanho | Descrição |
 |---|---|---|
-| Ômega | 12 × 16 | Humanoide dourado, olhos brancos, núcleo claro no peito |
-| Soldado | 8 × 10 | Capacete e farda verdes, botas pretas |
-| Agente | 8 × 10 | Cabelo preto, óculos escuros, terno, gravata vermelha |
-| Maçom | 8 × 11 | Capuz roxo, olhos vermelhos, medalhão dourado |
-| Tanque | 16 × 11 | Visto de cima, com torre desenhada à parte |
-| Caça | 16 × 9 | Asas em delta, cabine ciano, espelhado conforme a direção |
-| Disco alienígena | 14 × 8 | Cúpula verde com piloto, luzes na base |
-| Herói (molde) | 16 × 16 | Capa, cinto, botas. Desenhado em 2× ou 3× e recolorido por chefe |
+| Ômega | 12 × 16 | Armadura dourada com contorno ameixa, visor claro, núcleo marfim e botas sombreadas |
+| Soldado | 8 × 10 | Capacete com luz oliva, rosto sombreado, farda e arma de aço |
+| Agente | 8 × 10 | Cabelo escuro, óculos, lapela iluminada e gravata carmim |
+| Maçom | 8 × 11 | Capuz violeta com contorno escuro, olhos rubi e medalhão de latão |
+| Tanque | 16 × 11 | Blindagem oliva, esteiras segmentadas e canhão orientável desenhado à parte |
+| Caça | 16 × 9 | Asas em delta com contorno, fuselagem sombreada, cabine ciano e propulsores |
+| Disco alienígena | 14 × 8 | Cúpula de jade com piloto, aro metálico e luzes de pouso |
+| Égide | 16 × 16, em 2× | Gola alta, ombreiras, capa militar e escudo orientável |
+| Valquíria | 16 × 16, em 2× | Coroa alada, cabelo assimétrico e manto de tempestade |
+| Titã | 16 × 16, em 3× | Ombros largos, punhos grandes e fissuras incandescentes |
+| Sentinela | 16 × 16, em 2× | Antenas, visor fechado, placas angulares e botas propulsoras |
+
+Sprites definidos em código, com grupos de pixels sólidos, contornos escuros coloridos e rampas curtas de sombra, meio-tom e luz. A direção combina o contraste gótico de Vampire Survivors com a economia de cores de 20 Minutes Till Dawn, mantendo o cenário militar e os personagens originais. Chefes usam grades próprias em `BOSS_ROWS`, com paletas por material em `BOSS_PALETTES`.
 
 Cada sprite tem uma versão de silhueta branca que pisca por 60 ms ao levar dano.
 

@@ -4,7 +4,7 @@ export interface BossDef {
   id: number;
   name: string;
   sub: string;
-  /** Sprite scale (the art is a shared 16×16 template). */
+  /** Sprite scale (each sprite occupies a 16×16 grid). */
   scale: number;
   r: number;
   hp: number;

@@ -1,111 +1,130 @@
-// Pixel art as data: each string is a row, each char maps to a palette color, '.' is transparent.
-// See .claude/skills/pixel-art-and-sfx for the art rules.
-
+// Hand-authored pixel clusters: '.' is transparent; each character is one pixel.
 export interface PixelArt { rows: string[]; pal: Record<string, string> }
 
+// Keep the 12×16 footprint: clones, ghosts and the player share this origin.
 export const PLAYER: PixelArt = {
   rows: [
-    '....oooo....',
-    '...oyyyyo...',
-    '...yyyyyy...',
-    '...ywyywy...',
-    '...yyyyyy...',
-    '....yddy....',
-    '..yyyyyyyy..',
-    '.yyyYYYYyyy.',
-    '.yy.YwwY.yy.',
-    '.yy.yYYy.yy.',
-    '.y..yyyy..y.',
-    '....yyyy....',
-    '....yy.yy...',
-    '...yy...yy..',
-    '...yy...yy..',
-    '..ddd...ddd.',
+    '....kkkk....',
+    '...kWYYyk...',
+    '...kYWWyk...',
+    '...kweewk...',
+    '....kYyk....',
+    '...kdYydk...',
+    '..kYWYYWyk..',
+    '.kYykWWkyyk.',
+    '.kYkYWWYkdk.',
+    '.kwkdYYdkwk.',
+    '..k.kYYk.k..',
+    '....kddk....',
+    '...kYkkYk...',
+    '...kykkyk...',
+    '..kydkkdyk..',
+    '..kkkkkkkk..',
   ],
-  pal: { o: '#fff6d6', y: '#ffd25e', Y: '#ffe9a8', d: '#c98f2a', w: '#ffffff' },
+  pal: { k: '#392638', d: '#9e5836', y: '#db973e', Y: '#ffd25e', W: '#fff1bc', w: '#fffceb', e: '#624160' },
 };
 
 export const ENEMY_ART: Record<string, PixelArt> = {
   soldier: {
-    rows: ['..gggg..', '.gGGGGg.', '..ssss..', '..skks..', '.gggggg.', 'gggggggk', 'g.ggggkk', '..gggg..', '..g..g..', '.kk..kk.'],
-    pal: { g: '#4f6b2f', G: '#6d8b3c', s: '#e0b48a', k: '#22201c' },
+    rows: ['..kkkk..', '.kgGGgk.', 'kgGggggk', '.ksesk..', '.kgggkk.', 'kgGgkMMk', 'kgkgkmmk', '..kggkk.', '..gkkg..', '.kk..kk.'],
+    pal: { k: '#1c2028', g: '#526047', G: '#96a16b', s: '#c7a485', e: '#514550', M: '#a5a5a1', m: '#575d68' },
   },
   agent: {
-    rows: ['..hhhh..', '.hhhhhh.', '.ssssss.', '.kkkkkk.', '..ssss..', '.bbwwbb.', 'bbbwrbbb', 'b.bbbb.b', '..bbbb..', '..b..b..'],
-    pal: { h: '#1a1a1a', s: '#d8a27e', k: '#050505', b: '#202230', w: '#e9e9e9', r: '#b0182a' },
+    rows: ['..kkkk..', '.khhhhk.', '.kssssk.', '.kekkek.', '..kssk..', '.kbwrbk.', 'kbBwrbbk', 'kskbbksk', '..bkkb..', '.kk..kk.'],
+    pal: { k: '#151522', h: '#343345', s: '#c5a291', e: '#080e1c', b: '#34364e', B: '#656b83', w: '#d3cbd0', r: '#b85365' },
   },
   mason: {
-    rows: ['...pp...', '..pppp..', '.pPPPPp.', '.pPkkPp.', '.pPPPPp.', '.pppppp.', 'pppyyppp', 'pppppppp', 'pPpppPpp', '.pppppp.', 'pp.pp.pp'],
-    pal: { p: '#3b2350', P: '#5a3678', k: '#ff4a6a', y: '#d8b04a' },
+    rows: ['...kk...', '..kPPk..', '.kPpppk.', '.kpkkpk.', '.kpeepk.', '..kppk..', '.kPyyPk.', 'kPpyyppk', 'kPpWpppk', '.kpPPpk.', 'kk.kk.kk'],
+    pal: { k: '#201727', p: '#503354', P: '#94658e', e: '#f18caa', y: '#c49b63', W: '#ebd8a0' },
   },
   tank: {
     rows: [
       '.kkkkkkkkkkkkkk.',
-      'kttttttttttttttk',
-      'kTTTTTTTTTTTTTTk',
-      'kTTTmmmmmmmmTTTk',
-      'kTTmMMMMMMMMmTTk',
-      'kTTmMMMMMMMMmTTk',
-      'kTTmMMMMMMMMmTTk',
-      'kTTTmmmmmmmmTTTk',
-      'kTTTTTTTTTTTTTTk',
-      'kttttttttttttttk',
+      'ktTkggggggkTtTk',
+      'kttkgGGGGgktttk',
+      'kTTkgkkkkgkTTTk',
+      'kttkkgGGgkktttk',
+      'kTTkkGgggkkTTTk',
+      'kttkkggdgkktttk',
+      'kTTkgkkkkgkTTTk',
+      'kttkggggggktttk',
+      'kTtkdggggdkTtTk',
       '.kkkkkkkkkkkkkk.',
     ],
-    pal: { k: '#1a1d14', t: '#2e3324', T: '#56603c', m: '#3f4a2a', M: '#6c7a47' },
+    pal: { k: '#1b2028', t: '#393d43', T: '#73777a', g: '#515b40', G: '#8c9765', d: '#b0744e' },
   },
   jet: {
     rows: [
-      '......w.........',
-      '.....ww.........',
-      'kk..wwww........',
-      'kkwwwwwwwwwwww..',
-      '.wWWWWWWWWWWWwcc',
-      'kkwwwwwwwwwwww..',
-      'kk..wwww........',
-      '.....ww.........',
-      '......w.........',
+      '......kk........',
+      '.....kGk........',
+      'kk..kGgk........',
+      'krkkGggkkkkkk...',
+      '.gGGGGGccGGGGgkk',
+      'krkkgggkkkkkk...',
+      'kk..kggk........',
+      '.....kgk........',
+      '......kk........',
     ],
-    pal: { w: '#7d889c', W: '#a9b3c4', k: '#4a5262', c: '#6be0ff' },
+    pal: { k: '#202334', g: '#535b75', G: '#a4aaba', r: '#e97c68', c: '#87d5dd' },
   },
   alien: {
-    rows: ['.....aaaa.....', '....aAAAAa....', '...aAgAAgAa...', '..vvvvvvvvvv..', '.vVVlVVlVVlVv.', 'vvvvvvvvvvvvvv', '..vvvvvvvvvv..', '....l.l.l.l...'],
-    pal: { a: '#5be38c', A: '#9dffbf', g: '#0b2a15', v: '#5d6a7c', V: '#9aa7b8', l: '#b4ff6b' },
+    rows: ['.....kkkk.....', '....kaAAak....', '...kaeAAeak...', '..kkvvvvvvkk..', '.kvVVVVVVVVvk.', 'kvvlvvlvvlvvvk', '..kkvvvvvvkk..', '....k.k.k.k...'],
+    pal: { k: '#17282d', a: '#4e9e83', A: '#a7d6ad', e: '#1d3740', v: '#525268', V: '#9594ac', l: '#b1e5b8' },
   },
   // Pointing right; the pivot is column 4, row 2 (see MISSILE_ORIGIN).
   missile: {
-    rows: ['kk.......', 'kkgggggrr', 'kkgggggrr', 'kk.......'],
-    pal: { k: '#5a5f66', g: '#9aa0a8', r: '#ff3b3b' },
+    rows: ['kk.......', 'kfmmmmMrr', 'kfMMMMMrr', 'kk.......'],
+    pal: { k: '#252638', f: '#edb979', m: '#737889', M: '#bcc1cc', r: '#d95665' },
   },
 };
 export const MISSILE_ORIGIN = { x: 4 / 9, y: 2 / 4 };
 
-/** Shared 16×16 hero template, recolored per boss. */
-export const HERO_ROWS = [
-  '.....hhhhhh.....',
-  '....hhhhhhhh....',
-  '....hsssssshh...',
-  '....seesseesh...',
-  '....ssssssss....',
-  '.....ssssss.....',
-  '..cCCCCCCCCCCc..',
-  '.cCCCaaaaaaCCCc.',
-  'cCCCCCaaaaCCCCCc',
-  'cCC.CCCCCCCC.CCc',
-  'cCC.CCCCCCCC.CCc',
-  'cSS.CCaaaaCC.SSc',
-  'c...llllllll...c',
-  'c...lll..lll...c',
-  '....lll..lll....',
-  '...bbbb..bbbb...',
+/** Distinct 16×16 silhouettes; all retain the same boss anchor and scale. */
+export const BOSS_ROWS: string[][] = [
+  // Aegis: swept hair, high collar, epaulettes and split military cloak.
+  [
+    '.....kkkkkk.....', '....khhhhhhk....', '....hHHhhhkk....',
+    '....kseesSk.....', '.....ksSsk......', '...kkkSSkkk.....',
+    '..kcCaCCaCck....', '.kcCCCaCCCCck...', '.kcCCCaaCCCck...',
+    '.kcSCaaaaCSck...', '.kcSCccccCSck...', '.kcskllllksck...',
+    '.kccklkkklcck...', '.kccklkklkcck...', '..kkklkklkkk....',
+    '....kbbkkbbk....',
+  ],
+  // Volt: winged crown, asymmetric hair and a tapered storm mantle.
+  [
+    '..ak..aa..ka....', '...ahhHHhha.....', '...khHHHHhhk....',
+    '...khseesShk....', '....hksSshhk....', '..kcckSSkCcck...',
+    '.kcCCCaCCCCCCk..', 'kcCCkCaaCkCCCck.', 'kccksCaaCskccck.',
+    '.kcksCCCCskcck..', '..k.kCaCCk.ck...', '....klCClk......',
+    '...kcllllc.k....', '..kccklklcck....', '...kkblkbkk.....',
+    '....kbbkbbk.....',
+  ],
+  // Titan: heavy neck, oversized shoulders, glowing cracks and bare fists.
+  [
+    '.....kkkkkk.....', '....khHHhhhk....', '....kseesSsk....',
+    '....ksSSSssk....', '.....ksSSsk.....', '..kkkCSSCCkkk...',
+    '.kCCCaCCCaCCCk..', 'kCCaCCaaCCCaCCk.', 'kCCaCCaaCCCaCCk.',
+    'kSSkCCaaCCCkSSk.', 'kSSkkCCCCkkkSSk.', '.kk.kllllk..kk..',
+    '....klkklk......', '...kllkkllk.....', '...kllkkllk.....',
+    '..kbbbkkbbbk....',
+  ],
+  // Sentinel: antennae, enclosed visor, angular armor and thruster boots.
+  [
+    '....a......a....', '....kCkkkkCk....', '....kCHHHCk.....',
+    '....kaaaaak.....', '....kCCCCCk.....', '.....kCCk.......',
+    '..kkCCaaCCkk....', '.kCCHCaaCHCCk...', 'kCCkCCaaCCkCCk..',
+    'kSCkCCaaCCkCSk..', 'kSSkkCCCCkkSSk..', '.kk.kllllk.kk...',
+    '....klkklk......', '....klkklk......', '...kCbkkbCk.....',
+    '...kaakkkaak....',
+  ],
 ];
 
-/** Palettes indexed by boss id (sim/data/bosses.ts). */
+/** Material ramps: outline, hair, highlight, skin, light, eyes, cloak, armor, core, hands, legs, boots. */
 export const BOSS_PALETTES: Record<string, string>[] = [
-  { h: '#1f5c56', s: '#d6a27a', e: '#fff', c: '#7a4a22', C: '#2f8a7e', a: '#e0b85a', S: '#e0b85a', l: '#1d4a45', b: '#6b4320' },
-  { h: '#ffe14d', s: '#e8c0a0', e: '#c7f6ff', c: '#3a1f6b', C: '#7b4dff', a: '#ffe14d', S: '#b39bff', l: '#4b2c99', b: '#2b1a52' },
-  { h: '#3a0e10', s: '#c4483a', e: '#ffde59', c: '#5a1214', C: '#a8231f', a: '#ff8a3c', S: '#c4483a', l: '#5c1513', b: '#2a0a0a' },
-  { h: '#c9d3e0', s: '#c9d3e0', e: '#6bf3ff', c: '#3b4659', C: '#9aa8bd', a: '#6bf3ff', S: '#dfe7f2', l: '#5d6a80', b: '#2e3646' },
+  { k: '#172b32', h: '#284b4b', H: '#648779', s: '#b68a72', S: '#e0b49a', e: '#b5e8dc', c: '#293c43', C: '#467d72', a: '#c9a269', l: '#294c4c', b: '#383039' },
+  { k: '#281e40', h: '#b79b63', H: '#e3c991', s: '#bc9398', S: '#e6bfaf', e: '#e3e0ff', c: '#3c2d5a', C: '#81699c', a: '#c6c1ec', l: '#514167', b: '#342a49' },
+  { k: '#351e2b', h: '#482737', H: '#79404c', s: '#a04f50', S: '#cd7867', e: '#f4c58b', c: '#63313e', C: '#a65352', a: '#e5a36f', l: '#66363f', b: '#402733' },
+  { k: '#23283d', h: '#566178', H: '#c6cfdf', s: '#8494ac', S: '#ced4e1', e: '#a6e4e8', c: '#414b66', C: '#899bb7', a: '#8fd7de', l: '#546078', b: '#32394f' },
 ];
 
 // 8×8 HUD icons (DOM, rasterized by src/ui/icons.ts). One per evolution id, plus HUD glyphs.
