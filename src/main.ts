@@ -1,23 +1,18 @@
 import Phaser from 'phaser';
 import { GameScene } from './scenes/GameScene.ts';
 import { H, W } from './sim/util.ts';
-import { isRotated, patchForRotation } from './ui/orientation.ts';
 import './style.css';
 
 const stage = document.getElementById('stage')!;
 const wrap = document.getElementById('wrap')!;
 
-/** Size #stage to the largest 16:9 box that fits and expose --u (CSS px per game unit) for the HUD. */
+/** Size #stage to the largest 16:9 box that fits and expose --u0 (CSS px per game unit); the HUD's --u derives from it. */
 function fit() {
-  // Phones held upright get the game rotated sideways (see ui/orientation.ts); sizes below are pre-rotation
-  const rot = isRotated();
-  wrap.classList.toggle('rot', rot);
-  wrap.style.width = rot ? innerHeight + 'px' : '';
-  wrap.style.height = rot ? innerWidth + 'px' : '';
-  const w = Math.max(200, Math.min(wrap.clientWidth, ((wrap.clientHeight - 20) * 16) / 9));
+  const cs = getComputedStyle(wrap), pad = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
+  const w = Math.max(200, Math.min(wrap.clientWidth, ((wrap.clientHeight - pad) * 16) / 9));
   stage.style.width = w + 'px';
   stage.style.height = (w * 9) / 16 + 'px';
-  stage.style.setProperty('--u', w / W + 'px');
+  stage.style.setProperty('--u0', w / W + 'px');
 }
 fit();
 
@@ -37,9 +32,9 @@ const game = new Phaser.Game({
   scene: [GameScene],
 });
 
-patchForRotation(game, wrap);
-
 addEventListener('resize', () => {
   fit();
+  // refresh() reuses the cached parent size; measure the resized #stage first (rotating a phone left the canvas stale)
+  game.scale.getParentBounds();
   game.scale.refresh();
 });
