@@ -40,7 +40,7 @@ src/
   audio/Synth.ts        Web Audio synthesizer, play(SfxKey), beam drone
   ui/Hud.ts             DOM HUD + overlays (markup in index.html, styles in src/style.css)
   ui/icons.ts           rasterizes ICON_ART (render/art.ts) to data URLs for HUD <img>s
-  ui/orientation.ts     landscape on phones: fullscreen + orientation lock, CSS rotation fallback, Phaser pointer patch
+  ui/orientation.ts     landscape on phones: fullscreen + orientation lock, "rotate your phone" screen in portrait
 tests/                  vitest, sim only
 tools/balance.ts        headless bot runs → survival stats (npm run sim)
 tools/playtest.ts       headless Chromium → screenshots in .playtest/ (npm run playtest)

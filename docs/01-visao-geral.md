@@ -72,4 +72,4 @@ Inspirado em Vampire Survivors e 20 Minutes Till Dawn.
 | Inferior direito (celular) | Botões de toque com os mesmos ícones e recarga circular, em grade 2 × 2 |
 | Sob Ômega | Barrinha de vida que acompanha o personagem |
 
-A tela de evolução mostra as 3 cartas em lista, cada uma com ícone, nome, nível ("Novo!" para poderes inéditos), descrição e tecla, e embaixo o inventário atual.
+No celular todo o HUD fica 1,5× maior (relativo à tela) e a tela de evolução mostra as cartas lado a lado. A tela de evolução mostra as 3 cartas em lista, cada uma com ícone, nome, nível ("Novo!" para poderes inéditos), descrição e tecla, e embaixo o inventário atual.

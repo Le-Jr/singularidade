@@ -6,7 +6,9 @@
 - HUD refeito no estilo de Vampire Survivors e 20 Minutes Till Dawn: barra de XP no topo, vida com coração, inventário de poderes e passivas com ícones e nível, cronômetro central, barra de poderes com recarga circular e barrinha de vida sob Ômega.
 - Tela de evolução em lista vertical com ícones e o inventário atual.
 - Botões de toque com os ícones dos poderes e recarga circular, em grade 2 × 2 para não cobrir o placar.
-- Celular em pé: o jogo gira sozinho para a horizontal. No Android entra em tela cheia travado na horizontal; nos outros, é desenhado girado 90° com o toque corrigido.
+- Celular: jogo em tela cheia na horizontal, sem margens (trava a orientação no Android). Em pé, aparece "Gire o celular" e a partida pausa.
+- HUD e botões maiores no celular; cartas de evolução lado a lado.
+- Correção: o canvas ficava do tamanho errado depois de girar o aparelho.
 
 ### v2.0: Migração para Phaser
 - Jogo reescrito em **Phaser 4 + Vite + TypeScript**, com o mesmo conteúdo e os mesmos números da v1.1.
