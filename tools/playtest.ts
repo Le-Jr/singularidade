@@ -41,7 +41,7 @@ await page.keyboard.press(' ');
 await page.waitForTimeout(50);
 await shot(page, '03-erase');
 // Fast-forward to the first hero with every unlockable power
-await game(page, 'Object.assign(g.state.up, { time: 1, clones: 2, meteor: 2, phase: 1 }), g.state.P.max = g.state.P.hp = 1e9, g.state.t = 69.5');
+await game(page, 'Object.assign(g.state.up, { time: 1, clones: 2, meteor: 2, phase: 1 }), Object.assign(g.state.lv, { time: 1, clone: 2, meteor: 2, phase: 1, beam: 1, aura: 4, regen: 2 }), g.state.P.max = g.state.P.hp = 1e9, g.state.t = 69.5');
 await page.waitForTimeout(3500);
 await shot(page, '04-boss');
 await page.keyboard.press('q');
@@ -63,7 +63,13 @@ await phone.goto(url);
 await phone.waitForTimeout(800);
 await phone.tap('#startBtn');
 await phone.waitForTimeout(2000);
+await game(phone, 'g.state.up.time = 1, Object.assign(g.state.lv, { time: 1, aura: 2 })');
+await phone.tap('#mErase');
+await phone.waitForTimeout(600);
 await shot(phone, '08-mobile');
+await game(phone, "g.state.pendingUp = 1, g.state.upDelay = 0, g.state.upReason.push('Playtest')");
+await phone.waitForTimeout(500);
+await shot(phone, '09-mobile-upgrade');
 
 await browser.close();
 console.log('stats', JSON.stringify(stats));
