@@ -293,6 +293,11 @@ export class WorldView {
       .setTexture(P.hurt > 0 ? TEX.flash(TEX.player) : TEX.player)
       .setPosition(Math.round(P.x - 6), Math.round(py - 8))
       .setAlpha(P.inv > 0 && ((t * 20) | 0) % 2 ? 0.45 : 1);
+    // Life bar under the feet, Vampire Survivors style
+    const bx = Math.round(P.x - 8), by = Math.round(P.y + 11), fill = Math.round(16 * clamp(P.hp / P.max, 0, 1));
+    this.g.ui.fillStyle(0x0c0a12, 0.85).fillRect(bx - 1, by - 1, 18, 4)
+      .fillStyle(0x4a1020, 1).fillRect(bx, by, 16, 2)
+      .fillStyle(0xff3b5c, 1).fillRect(bx, by, fill, 2);
   }
 
   private drawRingsAndTexts(s: GameState) {

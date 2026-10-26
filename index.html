@@ -15,33 +15,38 @@
   <div id="stage">
     <canvas id="game" aria-label="Arena do jogo Singularidade"></canvas>
     <div id="hud">
+      <div id="xpTop"><i id="xpBar" style="width:0"></i><b id="lvlTxt" class="lbl">Nv 1</b></div>
       <div id="hpBox">
-        <div class="row lbl fs"><span>Essência</span><b id="hpTxt">1000</b></div>
-        <div class="bar"><i id="hpBar"></i></div>
-        <div class="row lbl fs"><span>Ascensão</span><b id="lvlTxt">Nv 1</b></div>
-        <div class="bar xp"><i id="xpBar" style="width:0"></i></div>
+        <img class="ico" data-icon="heart" alt="">
+        <div class="bar hp"><i id="hpBar"></i><b id="hpTxt" class="lbl">1000</b></div>
       </div>
-      <div id="stats">
+      <div id="inv" aria-label="Poderes e evoluções">
+        <div class="invRow" id="invPowers"></div>
+        <div class="invRow" id="invPassive"></div>
+      </div>
+      <div id="clock">
         <div id="time">00:00</div>
-        <div class="lbl fs">Pontos <b id="scoreTxt">0</b></div>
-        <div class="lbl fs">Abates <b id="killTxt">0</b></div>
+        <div id="threat" class="lbl fs">Ameaça: <b id="threatTxt">Exército</b></div>
       </div>
       <div id="bossBox" hidden>
         <div id="bossName" class="lbl fs">Chefe</div>
         <div class="bar"><i id="bossBar"></i></div>
       </div>
-      <div id="threat" class="lbl fs">Ameaça: <b id="threatTxt">Exército</b></div>
+      <div id="stats">
+        <div class="lbl fs"><b id="killTxt">0</b><img class="ico" data-icon="skull" alt="Abates"></div>
+        <div class="lbl fs"><b id="scoreTxt">0</b><img class="ico" data-icon="star" alt="Pontos"></div>
+      </div>
       <div id="powers">
-        <div class="pw lbl fs"><span class="k" id="kBeam">Clique</span><span class="n">Raio</span></div>
-        <div class="pw lbl fs" id="pwErase"><div class="cd" id="cdErase"></div><span class="k" id="kErase">Espaço</span><span class="n">Apagar</span></div>
-        <div class="pw lbl fs" id="pwTp"><div class="cd" id="cdTp"></div><span class="k" id="kTp">Shift</span><span class="n">Teleporte</span></div>
-        <div class="pw lbl fs" id="pwTime" hidden><div class="cd" id="cdTime"></div><span class="k">Q</span><span class="n">Tempo</span></div>
+        <div class="ab" id="pwBeam"><img class="ico" data-icon="beam" alt=""><span class="k">Clique</span><span class="n lbl">Raio</span></div>
+        <div class="ab" id="pwErase"><img class="ico" data-icon="erase" alt=""><div class="cd" id="cdErase"></div><span class="k">Espaço</span><span class="n lbl">Apagar</span></div>
+        <div class="ab" id="pwTp"><img class="ico" data-icon="tp" alt=""><div class="cd" id="cdTp"></div><span class="k">Shift</span><span class="n lbl">Teleporte</span></div>
+        <div class="ab" id="pwTime" hidden><img class="ico" data-icon="time" alt=""><div class="cd" id="cdTime"></div><span class="k">Q</span><span class="n lbl">Tempo</span></div>
       </div>
       <div id="mob" hidden>
-        <button class="mb" id="mTime" type="button" hidden>PARAR<br>TEMPO</button>
-        <button class="mb" id="mBeam" type="button">RAIO</button>
-        <button class="mb" id="mErase" type="button">APAGAR</button>
-        <button class="mb" id="mTp" type="button">TELE<br>PORTE</button>
+        <button class="mb" id="mTime" type="button" hidden><img class="ico" data-icon="time" alt=""><span class="n">Tempo</span></button>
+        <button class="mb" id="mBeam" type="button"><img class="ico" data-icon="beam" alt=""><span class="n">Raio</span></button>
+        <button class="mb" id="mErase" type="button"><img class="ico" data-icon="erase" alt=""><span class="n">Apagar</span></button>
+        <button class="mb" id="mTp" type="button"><img class="ico" data-icon="tp" alt=""><span class="n">Teleporte</span></button>
       </div>
       <div id="banner"><div id="bTitle" class="lbl">—</div><div id="bSub" class="lbl fs"></div></div>
     </div>
@@ -83,10 +88,13 @@
     </div>
 
     <div class="ov" id="upOv" hidden>
-      <div class="card" style="max-width:calc(var(--u)*370)">
-        <div class="kick lbl" id="upKick">Herói derrotado</div>
-        <h1 style="font-size:max(22px,calc(var(--u)*20))">ESCOLHA UMA <span>EVOLUÇÃO</span></h1>
+      <div class="upPanel">
+        <div class="upHead">
+          <h1>EVOLU<span>ÇÃO!</span></h1>
+          <div class="kick lbl" id="upKick">Herói derrotado</div>
+        </div>
         <div class="upl" id="upList"></div>
+        <div class="upInv lbl fs"><span>Seus poderes</span><div class="invRow" id="upInvPowers"></div><div class="invRow" id="upInvPassive"></div></div>
       </div>
     </div>
 

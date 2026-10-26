@@ -106,7 +106,7 @@ export class GameScene extends Phaser.Scene {
         case 'boss-down': this.hud.hideBoss(); break;
         case 'upgrade-offer':
           this.controls.releaseHolds();
-          this.hud.openUpgrade(e.reason, e.cards, i => this.choose(i));
+          this.hud.openUpgrade(e.reason, e.cards, this.sim.s.lv, i => this.choose(i));
           break;
         case 'game-over': this.showOver(); break;
       }
